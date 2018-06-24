@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+{% load thumbnail %}
+{% load i18n %}
+
+{% block title %}
+    {% trans "Basket" %} | {{ block.super }}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <ul class="breadcrumb">
+        <li>
+            <a href="{{ homepage_url }}">{% trans "Home" %}</a>
+        </li>
+        <li class="active">{% trans "Basket" %}</li>
+    </ul>
+{% endblock %}
+
+{# Hide mini-basket so we don't have two baskets to keep in sync #}
+{% block mini_basket %}{% endblock %}
+
+{% block headertext %}
+    {% trans "Basket" %}
+{% endblock %}
+
+{% block content %}
+    {# Use a partial template so that AJAX can be used to re-render basket #}
+    {% include 'basket/partials/basket_content.html' %}
+{% endblock content %}
+
+{% block onbodyload %}
+    {{ block.super }}
+    {# We pass in the URL to send AJAX requests to #}
+    var options = {
+        'basketURL': '{% url 'basket:summary' %}'
+    };
+    oscar.basket.init(options);
+{% endblock %}
+    <footer id="myFooter">
+        <div class="container">
+            <ul>
+                <li><a href="#">Company Information</a></li>
+                <li><a href="#">Contact us</a></li>
+                <li><a href="#">Reviews</a></li>
+                <li><a href="#">Terms of service</a></li>
+            </ul>
+        <p class="footer-copyright">© 2018 Copyright Text</p>
+        </div>
+        <div class="footer-social">
+            <a href="#" class="social-icons"><i class="fa fa-facebook"></i></a>
+            <a href="#" class="social-icons"><i class="fa fa-google-plus"></i></a>
+            <a href="#" class="social-icons"><i class="fa fa-twitter"></i></a>
+        </div>
+    </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
