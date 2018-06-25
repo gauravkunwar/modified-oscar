@@ -27,7 +27,7 @@ class Shop(Application):
 
     def get_urls(self):
         urls = [
-            url(r'^catalogue/', self.catalogue_app.urls),
+            # url(r'^catalogue/', self.catalogue_app.urls), #old code
             url(r'^basket/', self.basket_app.urls),
             url(r'^checkout/', self.checkout_app.urls),
             url(r'^accounts/', self.customer_app.urls),
@@ -59,7 +59,8 @@ class Shop(Application):
         ]
 
         if settings.OSCAR_PROMOTIONS_ENABLED:
-            urls.append(url(r'', self.promotions_app.urls))
+            # urls.append(url(r'', self.promotions_app.urls)) #old code
+            urls.append(url(r'', self.catalogue_app.urls)) #new code
         return urls
 
 application = Shop()
